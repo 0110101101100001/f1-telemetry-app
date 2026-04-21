@@ -29,11 +29,15 @@ Um aplicativo construído em Flutter que simula a telemetria em tempo real de um
    ```bash
    flutter run
 
+<p>
 👨‍💻 Autor
+<br>
 Kaíque Nunes Vasconcelos Fraga Desenvolvedor & Data Science Student 
+<br>
 <a href="https://www.linkedin.com/in/kaique-nunes-vasconcelos-fraga-580867286/">
   <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
 </a>
 <a href="mailto:kaiquenvf@gmail.com">
   <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
 </a>
+</p>
