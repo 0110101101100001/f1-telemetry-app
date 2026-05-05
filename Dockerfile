@@ -1,25 +1,18 @@
 # ==========================================
-# Estágio 1: Build (Compilação do Flutter)
+# Estágio 1: Build (Usando imagem oficial pronta)
 # ==========================================
-FROM ubuntu:22.04 AS build-env
+FROM ghcr.io/cirruslabs/flutter:stable AS build-env
 
-# Instalar dependências necessárias para o Flutter rodar no Linux
-RUN apt-get update && apt-get install -y curl git unzip xz-utils zip libglu1-mesa
-
-# Baixar e instalar o Flutter (versão stable)
-RUN git clone https://github.com/flutter/flutter.git -b stable /usr/local/flutter
-ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
-
-# Inicializar o Flutter
-RUN flutter doctor
-
-# Criar a pasta de trabalho dentro do container
+# Criar a pasta de trabalho
 WORKDIR /app
 
-# Copiar os arquivos do seu projeto para dentro do container
+# Copiar os arquivos do projeto
 COPY . .
 
-# Baixar os pacotes e compilar o app para Web
+# Comando de segurança para evitar erro de permissão do Git no Docker
+RUN git config --global --add safe.directory '*'
+
+# Baixar pacotes e compilar para Web
 RUN flutter pub get
 RUN flutter build web --release
 
@@ -28,11 +21,11 @@ RUN flutter build web --release
 # ==========================================
 FROM nginx:alpine
 
-# Copiar a compilação pronta do Estágio 1 para a pasta pública do Nginx
+# Copiar a compilação pronta para o servidor Nginx
 COPY --from=build-env /app/build/web /usr/share/nginx/html
 
-# Expor a porta 80 (O Render vai ler isso e rotear automaticamente)
+# Abrir a porta 80
 EXPOSE 80
 
-# Iniciar o servidor Nginx
+# Iniciar o servidor
 CMD ["nginx", "-g", "daemon off;"]
