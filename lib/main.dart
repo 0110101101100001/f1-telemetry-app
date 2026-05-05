@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'screens/home_screen.dart';
+// 1. Troque a importação para a nova tela do seminário
+import 'screens/seminar_screen.dart'; 
 
 void main() {
   runApp(const F1TelemetryApp());
@@ -17,7 +18,8 @@ class F1TelemetryApp extends StatelessWidget {
         brightness: Brightness.dark,
         primarySwatch: Colors.red,
       ),
-      home: const HomeScreen(),
+      // 2. Mude a rota inicial de HomeScreen para SeminarScreen
+      home: const SeminarScreen(),
     );
   }
 }
