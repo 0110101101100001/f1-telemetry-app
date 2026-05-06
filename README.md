@@ -54,12 +54,13 @@ O projeto utiliza um pipeline de **Multi-stage Build** no Docker, garantindo par
    flutter run
 
 Opção 2: Execução via Docker
-Caso possua o Docker instalado, você pode compilar e rodar o contêiner isoladamente:
-  ```bash
-  docker build -t f1-telemetry-app .
+1. Caso possua o Docker instalado, você pode compilar e rodar o contêiner isoladamente:
+   ```bash
+    docker build -t f1-telemetry-app
+   ```bash
   docker run -d -p 8080:80 f1-telemetry-app
 
-Acesse http://localhost:8080 no seu navegador.
+2. Acesse http://localhost:8080 no seu navegador.
 
 <p>
 👨‍💻 Autor
