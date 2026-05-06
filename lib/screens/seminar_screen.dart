@@ -46,113 +46,152 @@ class _SeminarScreenState extends State<SeminarScreen> {
             ],
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Row(
-            children: [
-              // ==========================================
-              // LADO ESQUERDO: Slides Interativos (30%)
-              // ==========================================
-              Expanded(
-                flex: 3,
-                child: GlassContainer(
-                  child: Column(
+        // LayoutBuilder descobre o tamanho da tela do dispositivo
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            // Consideramos "mobile" se a largura for menor que 900 pixels
+            final isMobile = constraints.maxWidth < 900;
+
+            return Padding(
+              padding: EdgeInsets.all(isMobile ? 12.0 : 24.0), // Margem menor no celular
+              child: isMobile
+                  ? Column(
+                      children: [
+                        // NO CELULAR: Simulador em cima, Slides embaixo
+                        Expanded(flex: 5, child: _buildSimulatorPanel()),
+                        const SizedBox(height: 16),
+                        Expanded(flex: 5, child: _buildSlidesPanel(isMobile)),
+                      ],
+                    )
+                  : Row(
+                      children: [
+                        // NO PC: Slides na esquerda, Simulador na direita
+                        Expanded(flex: 3, child: _buildSlidesPanel(isMobile)),
+                        const SizedBox(width: 24),
+                        Expanded(flex: 7, child: _buildSimulatorPanel()),
+                      ],
+                    ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  // ==========================================
+  // PAINEL DE SLIDES (Esquerda no PC, Baixo no Celular)
+  // ==========================================
+  Widget _buildSlidesPanel(bool isMobile) {
+    return GlassContainer(
+      child: Column(
+        children: [
+          // Cabeçalho Fixo do Seminário
+          Container(
+            padding: EdgeInsets.all(isMobile ? 16 : 24),
+            decoration: BoxDecoration(
+              border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.05))),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  "Simulador de Telemetria F1",
+                  style: TextStyle(color: Colors.white, fontSize: isMobile ? 16 : 20, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  "Showcase Técnica: Dart 3 & Flutter Web",
+                  style: TextStyle(color: const Color(0xFFE10600), fontSize: isMobile ? 12 : 14, fontWeight: FontWeight.w600),
+                ),
+              ],
+            ),
+          ),
+          
+          // Área de conteúdo com scroll
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.all(isMobile ? 16 : 24),
+              children: [_slides[_currentSlide]],
+            ),
+          ),
+          
+          // Barra de Navegação Inferior
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: isMobile ? 16 : 24, vertical: isMobile ? 12 : 16),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.2),
+              border: Border(top: BorderSide(color: Colors.white.withOpacity(0.05))),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _currentSlide > 0 ? _prevSlide : null,
+                  icon: const Icon(Icons.arrow_back_ios, size: 12),
+                  label: Text(isMobile ? "" : "Anterior"), // Oculta o texto no celular para economizar espaço
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white.withOpacity(0.1),
+                    foregroundColor: Colors.white,
+                    disabledBackgroundColor: Colors.white.withOpacity(0.05),
+                    disabledForegroundColor: Colors.white.withOpacity(0.3),
+                    elevation: 0,
+                    padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 16, vertical: 12),
+                  ),
+                ),
+                Text(
+                  "0${_currentSlide + 1} / 0${_slides.length}",
+                  style: const TextStyle(color: Colors.white54, fontSize: 13, fontWeight: FontWeight.bold, letterSpacing: 2),
+                ),
+                ElevatedButton(
+                  onPressed: _currentSlide < _slides.length - 1 ? _nextSlide : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFE10600),
+                    foregroundColor: Colors.white,
+                    disabledBackgroundColor: const Color(0xFFE10600).withOpacity(0.3),
+                    disabledForegroundColor: Colors.white.withOpacity(0.5),
+                    elevation: 0,
+                    padding: EdgeInsets.symmetric(horizontal: isMobile ? 12 : 16, vertical: 12),
+                  ),
+                  child: Row(
                     children: [
-                      // Cabeçalho Fixo do Seminário
-                      Container(
-                        padding: const EdgeInsets.all(24),
-                        decoration: BoxDecoration(
-                          border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.05))),
-                        ),
-                        child: const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Simulador de Telemetria F1",
-                              style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              "Showcase Técnica: Dart 3 & Flutter Web",
-                              style: TextStyle(color: Color(0xFFE10600), fontSize: 14, fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                      ),
-                      
-                      // Área de conteúdo com scroll
-                      Expanded(
-                        child: ListView(
-                          padding: const EdgeInsets.all(24),
-                          children: [_slides[_currentSlide]],
-                        ),
-                      ),
-                      
-                      // Barra de Navegação Inferior
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.2),
-                          border: Border(top: BorderSide(color: Colors.white.withOpacity(0.05))),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ElevatedButton.icon(
-                              onPressed: _currentSlide > 0 ? _prevSlide : null,
-                              icon: const Icon(Icons.arrow_back_ios, size: 12),
-                              label: const Text("Anterior"),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white.withOpacity(0.1),
-                                foregroundColor: Colors.white,
-                                disabledBackgroundColor: Colors.white.withOpacity(0.05),
-                                disabledForegroundColor: Colors.white.withOpacity(0.3),
-                                elevation: 0,
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                              ),
-                            ),
-                            Text(
-                              "0${_currentSlide + 1} / 0${_slides.length}",
-                              style: const TextStyle(color: Colors.white54, fontSize: 13, fontWeight: FontWeight.bold, letterSpacing: 2),
-                            ),
-                            ElevatedButton(
-                              onPressed: _currentSlide < _slides.length - 1 ? _nextSlide : null,
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFFE10600),
-                                foregroundColor: Colors.white,
-                                disabledBackgroundColor: const Color(0xFFE10600).withOpacity(0.3),
-                                disabledForegroundColor: Colors.white.withOpacity(0.5),
-                                elevation: 0,
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                              ),
-                              child: const Row(
-                                children: [
-                                  Text("Próximo "),
-                                  Icon(Icons.arrow_forward_ios, size: 12),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      Text(isMobile ? "" : "Próximo "), // Oculta o texto no celular
+                      const Icon(Icons.arrow_forward_ios, size: 12),
                     ],
                   ),
                 ),
-              ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-              const SizedBox(width: 24),
-
-              // ==========================================
-              // LADO DIREITO: Simulador F1 Rodando (70%)
-              // ==========================================
-              Expanded(
-                flex: 7,
-                child: GlassContainer(
-                  clipBehavior: Clip.hardEdge,
-                  child: const HomeScreen(),
-                ),
-              ),
-            ],
+  // ==========================================
+  // PAINEL DO SIMULADOR (Direita no PC, Cima no Celular)
+  // ==========================================
+  Widget _buildSimulatorPanel() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Colors.white.withOpacity(0.15), width: 1.5),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          )
+        ],
+      ),
+      // O ClipRRect corta as pontas para caber na borda
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(22),
+        // A "Muralha": Impede que o efeito de vidro do painel de baixo vaze para cá
+        child: const RepaintBoundary(
+          // Um Scaffold interno garante um fundo 100% sólido e independente
+          child: Scaffold(
+            backgroundColor: Color(0xFF0D0D12),
+            body: HomeScreen(),
           ),
         ),
       ),
@@ -325,7 +364,7 @@ class _SeminarScreenState extends State<SeminarScreen> {
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: const Text(
-                  "Kaíque Nunes & Clarissa Donizetti | GitHub: @0110101101100001",
+                  "Kaíque Nunes | GitHub: @0110101101100001",
                   style: TextStyle(color: Colors.white70, fontSize: 13, fontFamily: 'monospace'),
                 ),
               ),
@@ -335,10 +374,9 @@ class _SeminarScreenState extends State<SeminarScreen> {
       ],
     );
   }
-  
 
   // ==========================================
-  // WIDGETS DE DESIGN (BASEADOS NA IMAGEM)
+  // WIDGETS DE DESIGN 
   // ==========================================
 
   Widget _buildSectionTitle(String title) {
@@ -471,7 +509,7 @@ class GlassContainer extends StatelessWidget {
   final Widget child;
   final Clip clipBehavior;
 
-  const GlassContainer({super.key, required this.child, this.clipBehavior = Clip.none});
+  const GlassContainer({super.key, required this.child, this.clipBehavior = Clip.hardEdge});
 
   @override
   Widget build(BuildContext context) {
