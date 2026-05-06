@@ -364,7 +364,7 @@ class _SeminarScreenState extends State<SeminarScreen> {
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: const Text(
-                  "Kaíque Nunes | GitHub: @0110101101100001",
+                  "Kaíque Nunes & Clarissa Donizetti | GitHub: @0110101101100001",
                   style: TextStyle(color: Colors.white70, fontSize: 13, fontFamily: 'monospace'),
                 ),
               ),
