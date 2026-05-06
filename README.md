@@ -1,29 +1,13 @@
-<p>
-👨‍💻 <b>Autor</b>
-<br>
-Kaíque Nunes Vasconcelos Fraga | Desenvolvedor & Data Science Student 
-<br>
-<br>
-<a href="https://www.linkedin.com/in/kaique-nunes-vasconcelos-fraga-580867286/">
-  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
-</a>
-<a href="mailto:kaiquenvf@gmail.com">
-  <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColorAqui está uma versão atualizada e muito mais robusta do seu `README.md`. 
-
-Eu adicionei seções para destacar o **Modo Seminário** que construímos, a profundidade técnica do **Dart 3**, e as novas instruções de infraestrutura usando **Docker e Render**. Isso vai deixar o seu repositório com uma cara de projeto sênior!
-
-Basta copiar o código abaixo e colar no seu arquivo `README.md`:
-```markdown
 # F1 Live Telemetry Simulator 🏎️
+
+Um aplicativo construído em Flutter que simula a telemetria em tempo real de um carro de Fórmula 1. O projeto possui uma interface visual imersiva e responsiva, fortemente inspirada na identidade da F1 TV, e serve como um **Showcase Técnico** das capacidades avançadas do Dart 3.
 
 ![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
 ![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=for-the-badge&logo=render&logoColor=white)
 
-Um aplicativo construído em Flutter que simula a telemetria em tempo real de um carro de Fórmula 1. O projeto possui uma interface visual imersiva e responsiva, fortemente inspirada na identidade da F1 TV, e serve como um **Showcase Técnico** das capacidades avançadas do Dart 3.
-
-🟢 **Live Demo:** https://f1-telemetry-g4au.onrender.com/
+🟢 **Live Demo:** [https://f1-telemetry-g4au.onrender.com]
 
 ## 🏁 Funcionalidades
 
@@ -53,30 +37,39 @@ O projeto adota uma separação de responsabilidades modular:
 ### 🐳 Infraestrutura (Docker & Deploy)
 O projeto utiliza um pipeline de **Multi-stage Build** no Docker, garantindo paridade de ambiente. O estágio 1 encapsula o Flutter SDK para compilação estática (AOT), e o estágio 2 serve a aplicação via **Nginx** de forma ultra-leve na nuvem (Render).
 
----
-
 ## 🚀 Como Executar
 
 ### Opção 1: Execução Local (Flutter SDK)
 1. Certifique-se de ter o Flutter SDK instalado.
 2. Clone este repositório:
-
    ```bash
    git clone https://github.com/seu-usuario/seu-repositorio.git
 
 3. Baixe as dependências:
-    ```bash
-    flutter pub get
+   ```bash
+   flutter pub get
 
 4. Execute o projeto (Web, Desktop ou Mobile):
-    ```bash
-    flutter run
+   ```bash
+   flutter run
 
 Opção 2: Execução via Docker
-
 Caso possua o Docker instalado, você pode compilar e rodar o contêiner isoladamente:
   ```bash
   docker build -t f1-telemetry-app .
   docker run -d -p 8080:80 f1-telemetry-app
 
 Acesse http://localhost:8080 no seu navegador.
+
+<p>
+👨‍💻 Autor
+<br>
+Kaíque Nunes Vasconcelos Fraga Desenvolvedor & Data Science Student 
+<br>
+<a href="https://www.linkedin.com/in/kaique-nunes-vasconcelos-fraga-580867286/">
+  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" />
+</a>
+<a href="mailto:kaiquenvf@gmail.com">
+  <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" />
+</a>
+</p>
