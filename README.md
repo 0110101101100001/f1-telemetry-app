@@ -57,8 +57,7 @@ Opção 2: Execução via Docker
 1. Caso possua o Docker instalado, você pode compilar e rodar o contêiner isoladamente:
    ```bash
     docker build -t f1-telemetry-app
-   ```bash
-  docker run -d -p 8080:80 f1-telemetry-app
+    docker run -d -p 8080:80 f1-telemetry-app
 
 2. Acesse http://localhost:8080 no seu navegador.
 
