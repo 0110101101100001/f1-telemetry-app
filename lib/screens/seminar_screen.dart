@@ -12,11 +12,14 @@ class SeminarScreen extends StatefulWidget {
 class _SeminarScreenState extends State<SeminarScreen> {
   int _currentSlide = 0;
 
-  List<Widget> get _slides => [
+    List<Widget> get _slides => [
         _buildSlide1(),
         _buildSlide2(),
         _buildSlide3(),
         _buildSlide4(),
+        _buildSlide5(),
+	      _buildSlide6(),
+	      _buildSlide7(),
       ];
 
   void _nextSlide() {
@@ -208,39 +211,51 @@ class _SeminarScreenState extends State<SeminarScreen> {
         _buildSectionTitle("01. Descrição do Projeto"),
         _buildTopicTag("Contextualização, Viabilidade e Escopo"),
         _buildText(
-          "O simulador processa dados críticos de uma volta rápida no circuito de Interlagos, operando sob um modelo estritamente assíncrono.",
+          "O projeto consiste em um aplicativo construído em Flutter que simula a telemetria em tempo real de um carro de Fórmula 1. Servindo como um Showcase Técnico das capacidades avançadas do Dart 3.  Operando sob um modelo estritamente assíncrono, a aplicação espelha a passagem do tempo real, gerando eventos contínuos de alta frequência (milissegundos) que são consumidos, processados e renderizados dinamicamente. O foco é evidenciar o poder do Dart nativo, sem dependências externas, provando que a linguagem é capaz de gerenciar um fluxo intenso de dados com consumo de memória e CPU extremamente baixo.",
         ),
         const SizedBox(height: 16),
         _buildBullet("Real-Time", "Espelhamento de tempo físico e cálculos cinemáticos."),
         _buildBullet("Local Processing", "Geração de dados via algoritmos matemáticos nativos."),
         _buildBullet("Viabilidade", "Sistema simples, focado em performance de pipeline de dados."),
-        
-        const SizedBox(height: 32),
-        _buildTopicTag("Foco na Linguagem: Dart 3"),
-        const SizedBox(height: 12),
-        _buildFeatureCard(
-          icon: Icons.sync,
-          title: "Concorrência",
-          desc: "Uso do Event Loop para gerenciar eventos de telemetria sem bloquear a Main Thread de renderização.",
-        ),
-        _buildFeatureCard(
-          icon: Icons.security,
-          title: "Tipagem Estrita",
-          desc: "Aplicação de ADTs (Tipos de Dados Algébricos) para segurança absoluta em transições de estado.",
-        ),
-        _buildFeatureCard(
-          icon: Icons.code,
-          title: "Paradigmas",
-          desc: "Hibridismo entre Orientação a Objetos e Programação Funcional declarativa.",
-        ),
       ],
     );
   }
 
   // ==========================================
-  // SLIDE 2: RECURSOS (SEALED & RECORDS)
+  // SLIDE 2: FOCO NA LINGUAGUEM
   // ==========================================
   Widget _buildSlide2() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSectionTitle("02. Foco na Linguagem"),
+        _buildTopicTag("Dart 3"),
+        _buildText(
+          "Este projeto foi desenhado com um escopo delimitado (sem dependências de hardware externo ou APIs pagas) para evidenciar puramente o amadurecimento lógico e estrutural da linguagem Dart, destacando o amadurecimento da linguagem, saindo de uma ferramenta primariamente voltada para UI e layout, para uma linguagem robusta de engenharia de software e processamento lógico:",
+        ),
+        _buildFeatureCard(
+          icon: Icons.sync,
+          title: "Concorrência",
+          desc: "Uso do Event Loop nativo para gerenciar a concorrência e o alto tráfego de dados da telemetria em tempo real sem bloquear a execução principal do sistema. O modelo de concorrência do Dart, baseado em isolates e eventos assíncronos, é fundamental para garantir que a aplicação permaneça responsiva e eficiente mesmo sob carga intensa de dados.",
+        ),
+        _buildFeatureCard(
+          icon: Icons.security,
+          title: "Tipagem Estrita e Imutabilidade",
+          desc: "Aplicação de tipagem estrita para mapear todo o ciclo de vida da simulação, eliminando efeitos colaterais indesejados e garantindo total previsibilidade no uso da memória, no processamento dos estados. Ao adotar uma abordagem imutável, o projeto assegura que cada estado da simulação seja tratado como uma entidade independente, eliminando a possibilidade de modificações inesperadas.",
+        ),
+        _buildFeatureCard(
+          icon: Icons.code,
+          title: "Hibridismo de Paradigmas",
+          desc: "União entre a programação orientada a objetos clássica e a programação funcional, tirando proveito máximo das novas estruturas de retorno e de controle de fluxo exclusivas da versão 3.0. A programação orientada a objetos é ideal para modelar entidades complexas e suas interações, enquanto a programação funcional é excelente para manipular coleções de dados e criar pipelines de processamento limpos e concisos.",
+        ),
+      ],
+    );
+  }
+  
+  // ==========================================
+  // SLIDE 3: RECURSOS (SEALED)
+  // ==========================================
+  Widget _buildSlide3() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -249,7 +264,7 @@ class _SeminarScreenState extends State<SeminarScreen> {
         const SizedBox(height: 16),
         
         _buildSubTitle("Sealed Classes & Pattern Matching"),
-        _buildText("Garantia de Exaustividade Lógica no processamento de eventos da corrida."),
+        _buildText("Mapeamento da hierarquia de eventos da corrida através de classes seladas, utilizando switch expressions para garantir exaustividade lógica : o próprio compilador assegura que nenhum cenário será esquecido. Este recurso é fundamental para o gerenciamento de estados complexos e mutáveis, como os de uma corrida de Fórmula 1, onde eventos como início de volta, atualizações de telemetria e conclusão de volta exigem tratamentos distintos e seguros. Com as sealed classes, podemos modelar cada tipo de evento como uma subclasse distinta, e o pattern matching nos permite lidar com cada caso de forma clara e concisa, eliminando a possibilidade de erros lógicos decorrentes de casos não tratados."),
         const SizedBox(height: 12),
         _buildDraculaCodeBlock([
           _k("sealed class "), _t("TelemetryEvent "), _s("{}\n"),
@@ -260,11 +275,23 @@ class _SeminarScreenState extends State<SeminarScreen> {
           _t("  TelemetryUpdate"), _s("(:"), _k("var "), _s("speed) => renderHUD(speed),\n"),
           _s("};"),
         ]),
+      ],
+    );
+  }
 
-        const SizedBox(height: 32),
+  // ==========================================
+  // SLIDE 4: RECURSOS (RECORDS)
+  // ==========================================
+  Widget _buildSlide4() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSectionTitle("02. Recursos da Linguagem"),
+        _buildTopicTag("Continuação Técnica"),
+        const SizedBox(height: 16),
         
         _buildSubTitle("Records: Tuplas Eficientes"),
-        _buildText("Otimização do tráfego de dados no cálculo de estatísticas setoriais, eliminando classes boilerplate."),
+        _buildText("Otimização do tráfego de informações analíticas por tuplas, permitindo retornos múltiplos e tipados que eliminam a necessidade de classes intermediárias redundantes. Este recurso é crucial para o processamento de dados de telemetria, onde cálculos como velocidade máxima e temperatura média são frequentemente necessários. Com Records, podemos retornar esses valores em uma única estrutura leve, e ainda assim acessar cada campo por nome, mantendo a clareza e a segurança do código."),
         const SizedBox(height: 12),
         _buildDraculaCodeBlock([
           _c("// Retorno múltiplo com Tipagem Estrutural\n"),
@@ -279,9 +306,9 @@ class _SeminarScreenState extends State<SeminarScreen> {
   }
 
   // ==========================================
-  // SLIDE 3: RECURSOS (GENERATORS & HOF)
+  // SLIDE 5: RECURSOS (GENERATORS)
   // ==========================================
-  Widget _buildSlide3() {
+  Widget _buildSlide5() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -290,7 +317,7 @@ class _SeminarScreenState extends State<SeminarScreen> {
         const SizedBox(height: 16),
 
         _buildSubTitle("Generators: async* & yield"),
-        _buildText("Motor de simulação baseado em Lazy Evaluation e suspensão de execução."),
+        _buildText("O motor lógico do simulador baseia-se em uma função geradora assíncrona. Ela utiliza o comando yield para emitir estados autônomos a cada fração de segundo, mantendo o consumo de memória altamente eficiente mesmo sob fluxo intenso de dados. Este paradigma de Lazy Evaluation permite que a função pause sua execução, retorne um valor e retome exatamente de onde parou, criando um pipeline de dados fluido e responsivo que espelha a passagem do tempo real."),
         const SizedBox(height: 12),
         _buildDraculaCodeBlock([
           _t("Stream"), _s("<"), _t("TelemetryEvent"), _s("> startStream() "), _k("async* "), _s("{\n"),
@@ -301,11 +328,24 @@ class _SeminarScreenState extends State<SeminarScreen> {
           _s("  }\n"),
           _s("}"),
         ]),
+      ],
+    );
+  }
 
-        const SizedBox(height: 32),
+    // ==========================================
+  // SLIDE 6: RECURSOS (HOF) 
+  // ==========================================
+  Widget _buildSlide6() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSectionTitle("02. Recursos da Linguagem"),
+        _buildTopicTag("Continuação Técnica"),
+
+        const SizedBox(height: 16),
 
         _buildSubTitle("Funções de Alta Ordem"),
-        _buildText("Manipulação funcional de coleções para extração de métricas de performance (Pipeline de Dados)."),
+        _buildText("Manipulação funcional avançada de coleções de dados, utilizando encadeamentos de métodos como .map, .reduce e .where para processar o histórico de logs em tempo real e calcular estatísticas setoriais limpas e concisas. Este paradigma funcional permite uma abordagem declarativa, onde a intenção do código é clara e o processamento de dados é fluido, eliminando a necessidade de estruturas de controle imperativas e mutabilidade explícita."),
         const SizedBox(height: 12),
         _buildDraculaCodeBlock([
           _k("final "), _s("speedList = historico\n"),
@@ -319,10 +359,10 @@ class _SeminarScreenState extends State<SeminarScreen> {
     );
   }
 
+    // ==========================================
+  // SLIDE 7: ARQUITETURA E ENCERRAMENTO 
   // ==========================================
-  // SLIDE 4: ARQUITETURA E ENCERRAMENTO
-  // ==========================================
-  Widget _buildSlide4() {
+  Widget _buildSlide7() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
